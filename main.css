@@ -43,6 +43,8 @@ body {
     --inner-shadow: inset -7px -7px 12px #fff, inset 7px 7px 12px #aab7ca;
 }
 
+/* NavBar */
+
 .Nav-bar {
     display: flex;
     position: sticky;
@@ -54,7 +56,7 @@ body {
     width: 100%;
     min-height: 8rem;
     padding: 2.6rem 1.6rem;
-    background-color: var(--background_main);
+    background-color: rgba(251, 251, 249, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(75, 85, 99, 0.15);
@@ -84,8 +86,10 @@ body {
     justify-content: center;
     height: 2.4rem;
     line-height: 1;
-    color: var(--title_color)
+    color: var(--title_color);
 }
+
+/* Hero Section */
 
 main {
     display: flex;
@@ -93,7 +97,7 @@ main {
     position: relative;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
     background-color: var(--background_main);
 }
 
@@ -101,7 +105,7 @@ main {
     display: flex;
     flex-direction: column;
     width: 90%;
-    height: 100vh;
+    height: auto;
     margin: 3.4rem 0;
 }
 
@@ -122,6 +126,7 @@ main {
 .Hero-section p {
     font-size: 1.6rem;
     opacity: 60%;
+    line-height: 1.5;
 }
 
 .Button-container {
@@ -136,6 +141,41 @@ main {
     font-size: 1.3rem;
     width: 13rem;
     height: 4.6rem;
+}
+
+.Hero-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 3.6rem;
+}
+
+/* Products Section */
+
+.Products-section {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    margin-top: 3.4rem;
+}
+
+.Products-section .Products-headers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.Products-section .Products-headers h2 {
+    font-size: var(--font_large);
+    color: var(--title_color);
+}
+
+.Products-section .Products-headers span {
+    font-size: var(--font_standard);
+    color: var(--title_color);
+    opacity: 70%;
 }
 
 /* Extra Styles */
@@ -154,5 +194,5 @@ main {
 
 .Btn-color2 {
     background-color: var(--background_main);
-    border: 10px solid var(blue);
+    border: .2rem solid var(--border_color);
 }
