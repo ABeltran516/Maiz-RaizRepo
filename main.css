@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    scrollbar-width: none;
 }
 
 html,
@@ -164,7 +165,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.6rem;
 }
 
 .Products-section .Products-headers h2 {
@@ -172,11 +173,61 @@ main {
     color: var(--title_color);
 }
 
-.Products-section .Products-headers span {
+.Products-section .Products-headers a {
+    position: relative;
     font-size: var(--font_standard);
     color: var(--title_color);
     opacity: 70%;
 }
+
+.Products-cards {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-bottom: 3.6rem;
+}
+
+.Products-cards img {
+    width: 100%;
+    height: auto;
+    background-size: contain;
+}
+
+.Product-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 1.6rem;
+}
+
+.Product-info h3 {
+    font-size: var(--font_large);
+    font-style: oblique;
+    font-weight: 700;
+    font-variant: small-caps;
+    color: var(--title_color)
+}
+
+.Product-info p:nth-child(2) {
+    justify-self: end;
+    align-self: center;
+    text-align: right;
+    font-size: var(--font_standard);
+    font-weight: 700;
+    letter-spacing: 0.09rem;
+
+}
+
+.Product-info p:nth-child(3) {
+    grid-column: span 2 / span 2;
+    font-size: var(--font_standard);
+    font-style: italic;
+    opacity: 70%;
+}
+
+
 
 /* Extra Styles */
 
