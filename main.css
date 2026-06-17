@@ -180,17 +180,29 @@ main {
     opacity: 70%;
 }
 
+.Products-cards-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4.6rem;
+    width: 100%;
+    height: auto;
+    overflow-x: auto;
+    padding-bottom: 1.6rem;
+}
+
 .Products-cards {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 34.6rem;
     height: auto;
     margin-bottom: 3.6rem;
 }
 
 .Products-cards img {
-    width: 100%;
-    height: auto;
+    width: 34.6rem;
+    height: 34.6rem;
     background-size: contain;
 }
 
@@ -226,8 +238,6 @@ main {
     font-style: italic;
     opacity: 70%;
 }
-
-
 
 /* Extra Styles */
 
