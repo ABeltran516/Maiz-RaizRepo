@@ -196,14 +196,16 @@ main {
 .Products-cards {
     display: flex;
     flex-direction: column;
-    width: 34.6rem;
+    width: min(34.6rem, 100%);
+    min-width: 0;
     height: auto;
     margin-bottom: 3.6rem;
 }
 
 .Products-cards img {
-    width: 34.6rem;
-    height: 34.6rem;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
     background-size: contain;
 }
 
