@@ -159,6 +159,7 @@ main {
     width: 90%;
     height: auto;
     margin-top: 3.4rem;
+    border-bottom: 1px solid rgba(75, 85, 99, 0.15);
 }
 
 .Products-section .Products-headers {
@@ -238,6 +239,62 @@ main {
     font-style: italic;
     opacity: 70%;
 }
+
+/* Build Up Section */
+
+.Build-up-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
+.Build-up-section h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-style: italic;
+    font-variant: small-caps;
+    margin: 2.6rem 0 1.6rem 0;
+}
+
+.Build-up-info {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    width: 100%;
+    height: auto;
+    margin: 1.6rem 0;
+}
+
+.Build-up-info h3 {
+    font-size: var(--font_large);
+    font-style: italic;
+    color: var(--title_color);
+    align-content: center;
+    grid-column: span 3;
+}
+
+.Build-up-info h4 {
+    grid-column: span 5;
+}
+
+.Build-up-info img {
+    width: 100%;
+    height: auto;
+    grid-column: span 1;
+    grid-row: span 1;
+    grid-column-start: 4;
+    grid-row-start: 1;
+}
+
+.Build-up-info p {
+    grid-column: span 5;
+    grid-row: span 2;
+    grid-row-start: 3;
+}
+
+
 
 /* Extra Styles */
 
