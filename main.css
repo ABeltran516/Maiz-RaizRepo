@@ -110,6 +110,13 @@ main {
     margin: 3.4rem 0;
 }
 
+.Hero-section-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
 .Hero-section span {
     font-size: var(--font_standard);
     color: var(--title_color);
@@ -323,7 +330,63 @@ footer {
     letter-spacing: .04rem;
 }
 
+/* Footer Info */
 
+.Footer-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+    height: auto;
+    margin-top: 3.4rem;
+}
+
+.Brand-name {
+    font-size: var(--footer_font1);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--title_color);
+    margin-bottom: 1.6rem;
+}
+
+.Brand-copy {
+    font-size: var(--footer_font2);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--title_color);
+    margin-bottom: 1.6rem;
+}
+
+/* Media Queries */
+
+@media screen and (min-width: 768px) {
+    .Hero-section {
+        /* display: flex; */
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        min-height: 60rem;
+        gap: 2.6rem;
+        padding: 1.6rem;
+        overflow: hidden;
+        /* width: 90%;
+        height: auto;
+        margin: 3.4rem 0; */
+    }
+
+    .Hero-section-info {
+        width: min(60rem, 50%);
+    }
+
+    .Hero-img {
+        display: block;
+        width: min(60rem, 50%);
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
 
 /* Extra Styles */
 
