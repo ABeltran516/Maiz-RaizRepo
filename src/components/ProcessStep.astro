@@ -1,0 +1,18 @@
+---
+// Un paso del proceso de preparación. Reemplaza los 5 bloques duplicados del HTML original.
+interface Props {
+  titulo: string;
+  frase: string;
+  icono: string;
+  texto: string;
+}
+
+const { titulo, frase, icono, texto } = Astro.props;
+---
+
+<div class="Build-up-info">
+  <h3>✔ {titulo}</h3>
+  <h4>"{frase}"</h4>
+  <img src={icono} alt="" width="50" height="50" />
+  <p>{texto}</p>
+</div>

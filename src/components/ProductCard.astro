@@ -1,0 +1,21 @@
+---
+// Tarjeta de producto reutilizable. Reemplaza las tarjetas duplicadas del HTML original.
+interface Props {
+  nombre: string;
+  precio: number;
+  peso: string;
+  imagen: string;
+  alt?: string;
+}
+
+const { nombre, precio, peso, imagen, alt } = Astro.props;
+---
+
+<div class="Products-cards">
+  <img src={imagen} alt={alt ?? nombre} width="346" height="260" loading="lazy" />
+  <div class="Product-info">
+    <h3>{nombre}</h3>
+    <p>${precio} MXN</p>
+    <p>{peso}</p>
+  </div>
+</div>

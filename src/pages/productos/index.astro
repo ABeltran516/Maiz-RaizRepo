@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Footer from '../../components/Footer.astro';
+
+const productos = (await getCollection('products'))
+  .filter((p) => p.data.disponible)
+  .sort((a, b) => a.data.orden - b.data.orden);
+---
+
+<Layout
+  title="Productos | Maíz & Raíz"
+  description="Todas nuestras botanas saludables: chips deshidratados, horneados y sin aditivos. Hechos con ingredientes simples."
+>
+  <Navbar />
+  <main>
+    <section class="Products-section" id="productos">
+      <div class="Products-headers">
+        <h1>Nuestros Productos</h1>
+      </div>
+      <div class="Products-cards-container">
+        {
+          productos.map((p) => (
+            <a class="Product-link" href={`/productos/${p.id}`}>
+              <ProductCard
+                nombre={p.data.nombre}
+                precio={p.data.precio}
+                peso={p.data.peso}
+                imagen={p.data.imagen}
+                alt={p.data.alt}
+              />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .Product-link {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>

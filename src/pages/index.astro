@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+import Footer from '../components/Footer.astro';
+
+// Productos destacados para la home, ordenados por el campo `orden`.
+const productos = (await getCollection('products'))
+  .filter((p) => p.data.destacado && p.data.disponible)
+  .sort((a, b) => a.data.orden - b.data.orden);
+
+// Pasos del proceso de preparación (antes 5 bloques HTML duplicados).
+const pasos = [
+  {
+    titulo: 'Deshidratamos nuestro producto',
+    frase: 'Concentramos el sabor, reducimos la basura.',
+    icono: '/Assets/Oven_tray.svg',
+    texto:
+      'Al deshidratar eliminamos agua innecesaria, no nutrientes. El resultado: sabor intenso en cada bocado sin añadidos químicos que disimulen nada. Puro y potente.',
+  },
+  {
+    titulo: 'Horneamos de inmediato',
+    frase: 'Crujiente sin la grasa de las frituras.',
+    icono: '/Assets/Oven.svg',
+    texto:
+      'Adiós aceites oscuros y recalentados. El horno sella la textura perfecta manteniendo nutrientes intactos. Sabor intenso, conciencia limpia.',
+  },
+  {
+    titulo: 'Rociamos con aceite vegetal',
+    frase: 'Lo justo para la magia, sin excesos.',
+    icono: '/Assets/Olive_oil.svg',
+    texto:
+      'Una capa controlada de aceite vegetal puro es lo que da esa crujencia irresistible que amas. Sin freír, sin saturar, solo lo necesario para hacer que cada mordida sea perfecta.',
+  },
+  {
+    titulo: 'Centrifugamos la botana',
+    frase: 'Precisión en cada pieza.',
+    icono: '/Assets/Spin_dry.svg',
+    texto:
+      'La centrifugación distribuye el aceite uniformemente y expulsa el exceso. Resultado: máxima crujencia, mínima grasa. Textura consistente en cada bocado. Sin sorpresas desagradables.',
+  },
+  {
+    titulo: 'Agregamos especias',
+    frase: 'Sabor real. Sin colores raros ni aditivos.',
+    icono: '/Assets/Spices.svg',
+    texto:
+      'Especias naturales son el toque final. Cero colorantes, cero potenciadores de sabor artificial. Solo ingredientes que reconoces y que tu cuerpo agradece. Cada bocado es pura experiencia.',
+  },
+];
+---
+
+<Layout>
+  <Navbar />
+  <main>
+    <Hero />
+    <section class="Products-section" id="productos">
+      <div class="Products-headers">
+        <h2>Nuestros Productos</h2>
+        <a href="/productos">Ver todo →</a>
+      </div>
+      <div class="Products-cards-container">
+        {
+          productos.map((p) => (
+            <ProductCard
+              nombre={p.data.nombre}
+              precio={p.data.precio}
+              peso={p.data.peso}
+              imagen={p.data.imagen}
+              alt={p.data.alt}
+            />
+          ))
+        }
+      </div>
+    </section>
+    <section class="Build-up-section">
+      <h2>Nuestro proceso de preparación es sencillo pero poderoso</h2>
+      <div class="Build-up-info_container">
+        {pasos.map((paso) => <ProcessStep {...paso} />)}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

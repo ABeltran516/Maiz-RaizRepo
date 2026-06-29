@@ -67,7 +67,7 @@ body {
     text-decoration: none;
 }
 
-.Nav-bar h1 {
+.Nav-bar a span {
     font-size: 1.8rem;
     color: var(--title_color);
 }
@@ -124,7 +124,7 @@ main {
     margin-bottom: 1.6rem;
 }
 
-.Hero-section h2 {
+.Hero-section h1 {
     font-size: 4.2rem;
     font-weight: bold;
     font-style: italic;
@@ -290,7 +290,6 @@ footer {
 .Build-up-info {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     max-width: 45rem;
     height: auto;
@@ -390,12 +389,6 @@ footer {
 
 /* Extra Styles */
 
-.Small-break {
-    display: block;
-    margin-bottom: 1rem;
-    line-height: 0;
-}
-
 .Btn-color1 {
     background-color: var(--button_color);
     color: white;
@@ -405,4 +398,173 @@ footer {
 .Btn-color2 {
     background-color: var(--background_main);
     border: .2rem solid var(--border_color);
+}
+
+/* Cart Widget */
+
+.Cart-widget {
+    display: flex;
+    align-items: center;
+}
+
+.Cart-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.Cart-badge {
+    position: absolute;
+    top: -0.6rem;
+    right: -0.8rem;
+    min-width: 1.8rem;
+    height: 1.8rem;
+    padding: 0 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    background-color: var(--button_color);
+    border-radius: 1rem;
+    line-height: 1;
+}
+
+.Cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 50;
+}
+
+.Cart-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    width: min(38rem, 100%);
+    height: 100%;
+    padding: 2.6rem;
+    background-color: var(--background_main);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+}
+
+.Cart-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.Cart-panel-header h2 {
+    font-size: var(--font_large);
+    font-style: italic;
+    color: var(--title_color);
+}
+
+.Cart-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--title_color);
+}
+
+.Cart-empty {
+    color: var(--tailwind_color);
+    font-style: italic;
+}
+
+.Cart-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    flex: 1;
+}
+
+.Cart-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--border_color);
+}
+
+.Cart-item-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.Cart-item-name {
+    font-weight: 700;
+    color: var(--title_color);
+}
+
+.Cart-item-price {
+    font-size: var(--font_standard);
+    color: var(--tailwind_color);
+}
+
+.Cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.Cart-item-qty button {
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 1px solid var(--border_color);
+    background-color: var(--background_main);
+    border-radius: 0.6rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.Cart-item-remove {
+    margin-left: auto;
+    border: none !important;
+    background: none !important;
+}
+
+.Cart-panel-footer {
+    margin-top: 2rem;
+}
+
+.Cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font_medium);
+    margin-bottom: 1.6rem;
+}
+
+.Cart-checkout {
+    width: 100%;
+    height: 4.6rem;
+    font-size: var(--font_standard);
+    cursor: pointer;
+    border-radius: 0.6rem;
+}
+
+.Cart-clear {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: none;
+    border: none;
+    color: var(--tailwind_color);
+    font-size: var(--font_standard);
+    cursor: pointer;
+    text-decoration: underline;
 }

@@ -1,0 +1,161 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import AddToCartButton from '../../components/AddToCartButton.tsx';
+
+// Genera una página estática por cada producto de la colección.
+export async function getStaticPaths() {
+  const productos = await getCollection('products');
+  return productos.map((producto) => ({
+    params: { slug: producto.id },
+    props: { producto },
+  }));
+}
+
+const { producto } = Astro.props;
+const { data } = producto;
+const { Content } = await render(producto);
+
+const title = `${data.nombre} | Maíz & Raíz`;
+const description = `${data.nombre}: botana saludable de Maíz & Raíz, ${data.peso}, sin aditivos ni colorantes.`;
+
+// JSON-LD de Schema.org: ayuda a Google a mostrar precio y disponibilidad
+// directamente en los resultados de búsqueda (rich results).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: data.nombre,
+  image: new URL(data.imagen, Astro.site).href,
+  description,
+  brand: { '@type': 'Brand', name: 'Maíz & Raíz' },
+  offers: {
+    '@type': 'Offer',
+    price: data.precio,
+    priceCurrency: 'MXN',
+    availability: data.disponible
+      ? 'https://schema.org/InStock'
+      : 'https://schema.org/OutOfStock',
+    url: new URL(Astro.url.pathname, Astro.site).href,
+  },
+};
+---
+
+<Layout title={title} description={description} image={data.imagen}>
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Navbar />
+  <main>
+    <article class="Product-detail">
+      <img
+        class="Product-detail-img"
+        src={data.imagen}
+        alt={data.alt ?? data.nombre}
+        width="600"
+        height="600"
+      />
+      <div class="Product-detail-info">
+        <a class="Product-detail-back" href="/productos">← Volver a productos</a>
+        <h1>{data.nombre}</h1>
+        <p class="Product-detail-price">${data.precio} MXN</p>
+        <p class="Product-detail-weight">{data.peso}</p>
+        <div class="Product-detail-desc">
+          <Content />
+        </div>
+        {
+          data.disponible ? (
+            <AddToCartButton
+              client:visible
+              id={producto.id}
+              nombre={data.nombre}
+              precio={data.precio}
+            />
+          ) : (
+            <p class="Product-detail-soldout">Agotado por ahora</p>
+          )
+        }
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .Product-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2.6rem;
+    width: 90%;
+    margin: 3.4rem auto;
+  }
+
+  .Product-detail-img {
+    width: 100%;
+    height: auto;
+    border-radius: 2rem;
+  }
+
+  .Product-detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .Product-detail-back {
+    font-size: var(--font_standard);
+    color: var(--title_color);
+    opacity: 0.7;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .Product-detail-info h1 {
+    font-size: 3.2rem;
+    font-style: italic;
+    font-weight: bold;
+    color: var(--title_color);
+  }
+
+  .Product-detail-price {
+    font-size: var(--font_large);
+    font-weight: 700;
+    letter-spacing: 0.09rem;
+  }
+
+  .Product-detail-weight {
+    font-size: var(--font_standard);
+    font-style: italic;
+    color: var(--tailwind_color);
+  }
+
+  .Product-detail-desc {
+    font-size: var(--font_medium);
+    line-height: 1.6;
+    color: var(--tailwind_color);
+  }
+
+  .Product-detail-cta {
+    width: 100%;
+    max-width: 26rem;
+    height: 4.6rem;
+    margin-top: 1.6rem;
+    font-size: var(--font_standard);
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 768px) {
+    .Product-detail {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 4.6rem;
+    }
+
+    .Product-detail-img {
+      width: min(50rem, 50%);
+    }
+  }
+</style>
