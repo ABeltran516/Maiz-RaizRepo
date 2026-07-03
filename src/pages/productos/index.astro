@@ -8,6 +8,15 @@ import Footer from '../../components/Footer.astro';
 const productos = (await getCollection('products'))
   .filter((p) => p.data.disponible)
   .sort((a, b) => a.data.orden - b.data.orden);
+
+// Categoría derivada del nombre: primera palabra, sin acentos ("Jícama" -> "Jicama").
+const categoriaDe = (nombre: string) =>
+  nombre
+    .split(' ')[0]
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
+
+const categorias = ['Todos', 'Churritos', 'Maicitos', 'Camote', 'Jicama', 'Puffs'];
 ---
 
 <Layout
@@ -20,10 +29,29 @@ const productos = (await getCollection('products'))
       <div class="Products-headers">
         <h1>Nuestros Productos</h1>
       </div>
+
+      <div class="Category-filter" role="tablist" aria-label="Categorías de productos">
+        {
+          categorias.map((c, i) => (
+            <button
+              class="Category-chip"
+              data-cat={c}
+              data-active={i === 0 ? 'true' : 'false'}
+            >
+              {c}
+            </button>
+          ))
+        }
+      </div>
+
       <div class="Products-cards-container">
         {
           productos.map((p) => (
-            <a class="Product-link" href={`/productos/${p.id}`}>
+            <a
+              class="Product-link"
+              href={`/productos/${p.id}`}
+              data-categoria={categoriaDe(p.data.nombre)}
+            >
               <ProductCard
                 nombre={p.data.nombre}
                 precio={p.data.precio}
@@ -45,4 +73,62 @@ const productos = (await getCollection('products'))
     text-decoration: none;
     color: inherit;
   }
+
+  .Category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 2.6rem;
+  }
+
+  .Category-chip {
+    height: 4rem;
+    padding: 0 2rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--line-soft);
+    background: var(--bg-page);
+    color: var(--text-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      transform 160ms var(--ease-out);
+  }
+
+  .Category-chip:active {
+    transform: scale(0.96);
+  }
+
+  .Category-chip[data-active='true'] {
+    background: var(--espresso);
+    color: #fff;
+    border-color: var(--espresso);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .Category-chip:not([data-active='true']):hover {
+      border-color: var(--espresso);
+    }
+  }
 </style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLElement>('.Category-chip');
+  const cards = document.querySelectorAll<HTMLElement>('.Product-link');
+
+  function applyFilter(cat: string) {
+    cards.forEach((card) => {
+      const show = cat === 'Todos' || card.dataset.categoria === cat;
+      card.style.display = show ? '' : 'none';
+    });
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.setAttribute('data-active', String(c === chip)));
+      applyFilter(chip.dataset.cat ?? 'Todos');
+    });
+  });
+</script>
