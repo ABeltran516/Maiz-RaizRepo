@@ -3,8 +3,10 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
+import ValueStrip from '../components/ValueStrip.astro';
 import ProductCard from '../components/ProductCard.astro';
 import ProcessStep from '../components/ProcessStep.astro';
+import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
 
 // Productos destacados para la home, ordenados por el campo `orden`.
@@ -56,6 +58,7 @@ const pasos = [
   <Navbar />
   <main>
     <Hero />
+    <ValueStrip />
     <section class="Products-section" id="productos">
       <div class="Products-headers">
         <h2>Nuestros Productos</h2>
@@ -81,6 +84,7 @@ const pasos = [
         {pasos.map((paso) => <ProcessStep {...paso} />)}
       </div>
     </section>
+    <CTA />
   </main>
   <Footer />
 </Layout>

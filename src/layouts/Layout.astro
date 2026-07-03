@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ToastHost from '../components/ToastHost.tsx';
 
 interface Props {
   title?: string;
@@ -35,11 +36,11 @@ const ogImage = new URL(image, Astro.site);
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
 
-    <!-- Fuente Numans -->
+    <!-- Fuentes Editorial: DM Serif Display (títulos) + DM Sans (cuerpo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Numans&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap"
       rel="stylesheet"
     />
 
@@ -51,5 +52,6 @@ const ogImage = new URL(image, Astro.site);
   </head>
   <body>
     <slot />
+    <ToastHost client:load />
   </body>
 </html>

@@ -14,10 +14,25 @@ body {
 }
 
 html {
-    font-family: "Numans", sans-serif;
+    font-family: var(--font-sans);
     font-weight: 400;
     font-style: normal;
     font-size: 62.5%;
+}
+
+/* Los controles de formulario no heredan la fuente por defecto */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* Títulos statement en fuente display (DM Serif Display) */
+.Hero-section h1,
+.Product-detail-info h1 {
+    font-family: var(--font-display);
+    color: var(--text-heading);
 }
 
 body {
@@ -28,13 +43,44 @@ body {
 }
 
 :root {
-    --background_main: oklch(0.985 0.008 80);
-    --title_color: oklch(0.389 0.0342 253.54);
-    --tailwind_color: oklch(0.4461 0.0263 256.8);
-    --button_color: oklch(0.28 0.018 60);
-    --border_color: oklch(0.9 0.012 70);
-    --subtitle_color: #206FD6;
-    --footer_color: #f2f2f2;
+    /* === Design tokens — dirección "Tierra + Editorial + Suave" === */
+    /* Ambiente: Tierra (paleta cálida y terrosa) */
+    --bg-page: oklch(0.95 0.022 72);
+    --bg-surface: oklch(0.972 0.016 74);
+    --bg-sunken: oklch(0.925 0.026 70);
+    --bg-footer: oklch(0.905 0.032 66);
+    --bg-glass: rgba(247, 240, 230, 0.72);
+    --text-heading: oklch(0.32 0.032 50);
+    --text-body: oklch(0.43 0.026 55);
+    --espresso: oklch(0.30 0.040 45);
+    --azul: oklch(0.55 0.13 38);
+    /* acento terracota */
+    --azul-deep: oklch(0.47 0.13 38);
+    --hoja: oklch(0.62 0.13 145);
+    /* verde hoja para los ✔ (valor base estimado; ajústalo si tienes el exacto) */
+    --line-soft: oklch(0.88 0.022 65);
+    --line-divider: rgba(92, 70, 52, 0.16);
+    --shadow-md: 0 6px 18px rgba(72, 50, 34, 0.10);
+    --shadow-lg: 0 18px 40px rgba(72, 50, 34, 0.16);
+
+    /* Tipografía: Editorial */
+    --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
+    --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+    /* Forma: Suave */
+    --radius-sm: 14px;
+    --radius-md: 24px;
+    --radius-lg: 32px;
+    --radius-pill: 999px;
+
+    /* === Alias legacy → apuntan a los tokens nuevos (re-skin sin tocar cada componente) === */
+    --background_main: var(--bg-page);
+    --title_color: var(--text-heading);
+    --tailwind_color: var(--text-body);
+    --button_color: var(--espresso);
+    --border_color: var(--line-soft);
+    --subtitle_color: var(--azul);
+    --footer_color: var(--bg-footer);
     --footer_font1: 1.5rem;
     --footer_font2: 1.4rem;
     --font_standard: 1.3rem;
@@ -42,6 +88,11 @@ body {
     --font_large: 1.8rem;
     --outer-shadow: -2px -2px 12px #ebf3ff, 12px 12px 24px #aab7ca;
     --inner-shadow: inset -7px -7px 12px #fff, inset 7px 7px 12px #aab7ca;
+
+    /* Curvas de easing custom (más fuertes que las nativas) */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* NavBar */
@@ -188,62 +239,76 @@ main {
     opacity: 70%;
 }
 
+/* Grilla real: columnas alineadas y responsivas (1 → 2 → 3), como el diseño */
 .Products-cards-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 4.6rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem 3rem;
     width: 100%;
-    height: auto;
-    overflow-x: auto;
     padding-bottom: 1.6rem;
+}
+
+@media (min-width: 640px) {
+    .Products-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 960px) {
+    .Products-cards-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .Products-cards {
     display: flex;
     flex-direction: column;
-    width: min(34.6rem, 100%);
+    width: 100%;
     min-width: 0;
     height: auto;
-    margin-bottom: 3.6rem;
 }
 
+/* Proporción cuadrada uniforme: todas las cards quedan del mismo tamaño
+   sin importar las dimensiones de cada foto placeholder */
 .Products-cards img {
     width: 100%;
-    max-width: 100%;
-    height: auto;
-    background-size: contain;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--radius-md);
 }
 
 .Product-info {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: 1fr auto;
+    column-gap: 8px;
+    row-gap: 4px;
     margin-top: 1.6rem;
+    align-items: baseline;
 }
 
+/* Nombre: ocupa toda la fila y nunca se parte en dos líneas */
 .Product-info h3 {
+    grid-column: 1 / -1;
+    white-space: nowrap;
     font-size: var(--font_large);
     font-style: oblique;
     font-weight: 700;
     font-variant: small-caps;
-    color: var(--title_color)
+    color: var(--title_color);
 }
 
+/* Precio (izquierda) y peso (derecha) en la segunda fila */
 .Product-info p:nth-child(2) {
-    justify-self: end;
-    align-self: center;
-    text-align: right;
+    grid-column: 1;
+    justify-self: start;
     font-size: var(--font_standard);
     font-weight: 700;
     letter-spacing: 0.09rem;
-
 }
 
 .Product-info p:nth-child(3) {
-    grid-column: span 2 / span 2;
+    grid-column: 2;
+    justify-self: end;
     font-size: var(--font_standard);
     font-style: italic;
     opacity: 70%;
@@ -295,8 +360,8 @@ footer {
     height: auto;
     margin: 1.6rem 0;
     padding: 2.6rem;
-    background-color: var(--background_main);
-    border-radius: 2rem;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
 }
 
 .Build-up-info h3 {
@@ -389,6 +454,18 @@ footer {
 
 /* Extra Styles */
 
+.Btn-color1,
+.Btn-color2 {
+    transition: transform 160ms var(--ease-out);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.Btn-color1:active,
+.Btn-color2:active {
+    transform: scale(0.97);
+}
+
 .Btn-color1 {
     background-color: var(--button_color);
     color: white;
@@ -415,6 +492,11 @@ footer {
     border: none;
     cursor: pointer;
     padding: 0;
+    transition: transform 160ms var(--ease-out);
+}
+
+.Cart-trigger:active {
+    transform: scale(0.9);
 }
 
 .Cart-badge {
@@ -435,11 +517,30 @@ footer {
     line-height: 1;
 }
 
+/* Pop al incrementar: confirma que se agregó aunque el drawer esté cerrado */
+.Cart-badge[data-pop="true"] {
+    animation: badge-pop 180ms var(--ease-out);
+}
+
+@keyframes badge-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
 .Cart-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 50;
+    opacity: 0;
+    transition: opacity 220ms ease;
+    /* fondo empieza limpio; el fade evita el parpadeo */
+}
+
+.Cart-overlay[data-state="open"] {
+    opacity: 1;
+    transition: opacity 300ms ease;
 }
 
 .Cart-panel {
@@ -455,6 +556,15 @@ footer {
     background-color: var(--background_main);
     box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
     overflow-y: auto;
+    /* oculto a la derecha; salida rápida (ease-out, 220ms) */
+    transform: translateX(100%);
+    transition: transform 220ms var(--ease-out);
+}
+
+.Cart-panel[data-state="open"] {
+    /* entrada suave y artesanal (curva de drawer iOS, 320ms) */
+    transform: translateX(0);
+    transition: transform 320ms var(--ease-drawer);
 }
 
 .Cart-panel-header {
@@ -476,6 +586,11 @@ footer {
     font-size: 2rem;
     cursor: pointer;
     color: var(--title_color);
+    transition: transform 160ms var(--ease-out);
+}
+
+.Cart-close:active {
+    transform: scale(0.85);
 }
 
 .Cart-empty {
@@ -529,6 +644,17 @@ footer {
     border-radius: 0.6rem;
     font-size: 1.6rem;
     cursor: pointer;
+    transition: transform 140ms var(--ease-out), background-color 140ms ease;
+}
+
+.Cart-item-qty button:active {
+    transform: scale(0.9);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .Cart-item-qty button:hover {
+        background-color: var(--border_color);
+    }
 }
 
 .Cart-item-remove {
@@ -567,4 +693,191 @@ footer {
     font-size: var(--font_standard);
     cursor: pointer;
     text-decoration: underline;
+    transition: opacity 140ms ease;
+}
+
+.Cart-clear:active {
+    opacity: 0.6;
+}
+
+/* Micro-interacciones */
+
+/* Crossfade del texto del botón "Agregar al carrito" */
+.Btn-label {
+    display: inline-block;
+    transition: filter 200ms ease, opacity 200ms ease;
+}
+
+.Btn-label[data-swapping="true"] {
+    filter: blur(2px);
+    opacity: 0.7;
+}
+
+/* Tarjetas clickeables del listado: invitan con una ligera elevación */
+.Product-link {
+    display: block;
+    transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .Product-link:hover {
+        transform: translateY(-4px);
+    }
+}
+
+/* Flechas de navegación: el enlace se desliza hacia su dirección al hover.
+   El "Ver todo →" trae la flecha en el texto (con nbsp para que no se corte). */
+.Products-headers a,
+.Product-detail-back {
+    display: inline-block;
+    transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .Products-headers a:hover {
+        transform: translateX(3px);
+    }
+
+    .Product-detail-back:hover {
+        transform: translateX(-3px);
+    }
+}
+
+/* Value Strip (tira de valores bajo el hero) */
+
+.Value-strip {
+    width: 100%;
+    border-top: 1px solid var(--line-divider);
+    border-bottom: 1px solid var(--line-divider);
+    background: var(--bg-surface);
+}
+
+.Value-strip-inner {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1.8rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem 4rem;
+    justify-content: space-between;
+}
+
+.Value-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 1.4rem;
+    color: var(--text-heading);
+}
+
+.Value-check {
+    color: var(--hoja);
+    font-weight: 700;
+}
+
+/* Banda CTA de cierre */
+
+.Cta-section {
+    width: 90%;
+    margin: 5rem auto;
+}
+
+.Cta-band {
+    background: var(--espresso);
+    border-radius: var(--radius-lg);
+    padding: 5rem 4rem;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.Cta-band h2 {
+    margin: 0;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #fff;
+}
+
+.Cta-band p {
+    margin: 1.4rem auto 2.6rem;
+    max-width: 44rem;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.Btn-accent {
+    display: inline-block;
+    background: var(--azul);
+    color: #fff;
+    text-decoration: none;
+    padding: 1.3rem 2.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out);
+}
+
+.Btn-accent:active {
+    transform: scale(0.97);
+}
+
+/* Toast (feedback al agregar al carrito) */
+
+.Toast-host {
+    position: fixed;
+    left: 50%;
+    bottom: 2.6rem;
+    transform: translateX(-50%);
+    z-index: 70;
+    pointer-events: none;
+}
+
+.Toast {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.2rem 1.8rem;
+    background: var(--espresso);
+    color: #fff;
+    font-size: 1.4rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    animation: mrToastIn 220ms var(--ease-out);
+}
+
+.Toast-check {
+    color: var(--hoja);
+    font-weight: 700;
+}
+
+@keyframes mrToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Accesibilidad: respeta la preferencia de movimiento reducido.
+   Se conservan opacidad/color; se elimina el movimiento por transform. */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .Cart-overlay,
+    .Cart-clear {
+        transition: opacity 200ms ease !important;
+    }
 }

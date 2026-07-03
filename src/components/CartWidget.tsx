@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 import { useStore } from '@nanostores/preact';
 import {
   cartItems,
@@ -12,10 +12,52 @@ import { WHATSAPP_NUMBER, BRAND } from '../config';
 
 export default function CartWidget() {
   const items = useStore(cartItems);
-  const [abierto, setAbierto] = useState(false);
+  const [mounted, setMounted] = useState(false); // presencia en el DOM
+  const [open, setOpen] = useState(false); // estado visual (data-state)
+  const [pop, setPop] = useState(false); // pop del contador al agregar
+  const [hydrated, setHydrated] = useState(false); // evita mismatch SSR/cliente
+
+  // El estado del carrito vive en localStorage (no existe en el servidor).
+  // Solo mostramos datos dependientes del carrito tras montar en el cliente.
+  useEffect(() => setHydrated(true), []);
 
   const total = cartTotal(items);
   const count = cartCount(items);
+
+  // Pop del badge cuando el total de items aumenta (feedback aunque el drawer esté cerrado).
+  const prevCount = useRef(count);
+  useEffect(() => {
+    if (count > prevCount.current) {
+      setPop(true);
+      const t = setTimeout(() => setPop(false), 200);
+      prevCount.current = count;
+      return () => clearTimeout(t);
+    }
+    prevCount.current = count;
+  }, [count]);
+
+  const openCart = () => {
+    setMounted(true);
+    // Doble rAF: garantiza que el panel pinte en estado cerrado antes de abrir,
+    // para que la transición de entrada se dispare.
+    requestAnimationFrame(() => requestAnimationFrame(() => setOpen(true)));
+  };
+
+  const closeCart = () => {
+    setOpen(false);
+    // Espera a que termine la animación de salida (220ms) antes de desmontar.
+    setTimeout(() => setMounted(false), 240);
+  };
+
+  // Cerrar con la tecla Escape mientras el drawer está abierto.
+  useEffect(() => {
+    if (!mounted) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeCart();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [mounted]);
 
   const pedirPorWhatsApp = () => {
     const lineas = items.map(
@@ -29,27 +71,38 @@ export default function CartWidget() {
     window.open(url, '_blank');
   };
 
+  const state = open ? 'open' : 'closed';
+
   return (
     <div class="Cart-widget">
       <button
         class="Cart-trigger"
         aria-label="Abrir carrito de compras"
-        onClick={() => setAbierto(true)}
+        onClick={openCart}
       >
         <img src="/Assets/shopping_icon.svg" alt="" width="24" height="24" />
-        {count > 0 && <span class="Cart-badge">{count}</span>}
+        {hydrated && count > 0 && (
+          <span class="Cart-badge" data-pop={pop}>
+            {count}
+          </span>
+        )}
       </button>
 
-      {abierto && (
+      {mounted && (
         <>
-          <div class="Cart-overlay" onClick={() => setAbierto(false)} />
-          <aside class="Cart-panel" role="dialog" aria-label="Carrito de compras">
+          <div class="Cart-overlay" data-state={state} onClick={closeCart} />
+          <aside
+            class="Cart-panel"
+            data-state={state}
+            role="dialog"
+            aria-label="Carrito de compras"
+          >
             <header class="Cart-panel-header">
               <h2>Tu carrito</h2>
               <button
                 class="Cart-close"
                 aria-label="Cerrar carrito"
-                onClick={() => setAbierto(false)}
+                onClick={closeCart}
               >
                 ✕
               </button>

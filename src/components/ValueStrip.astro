@@ -1,0 +1,21 @@
+---
+// Tira de valores bajo el hero (del diseño de Claude Design).
+const items = [
+  'Horneado',
+  'Sin aditivos ni colorantes',
+  'Ingredientes que reconoces',
+];
+---
+
+<section class="Value-strip">
+  <div class="Value-strip-inner">
+    {
+      items.map((t) => (
+        <span class="Value-item">
+          <span class="Value-check">✔</span>
+          {t}
+        </span>
+      ))
+    }
+  </div>
+</section>
