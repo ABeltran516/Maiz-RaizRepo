@@ -10,7 +10,6 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow-x: hidden;
 }
 
 html {
@@ -18,6 +17,9 @@ html {
     font-weight: 400;
     font-style: normal;
     font-size: 62.5%;
+    /* El html evita el scroll horizontal a nivel de página; el body NO recorta,
+       para que la navbar full-bleed pueda salir de su margen lateral. */
+    overflow-x: hidden;
 }
 
 /* Los controles de formulario no heredan la fuente por defecto */
@@ -105,9 +107,14 @@ body {
     z-index: 10;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    /* Full-bleed: ocupa el 100% del viewport aunque el body tenga margin lateral.
+       100vw + margin-left centra un bloque del ancho del viewport.
+       El padding 3.6rem = 2rem (margin body) + 1.6rem, para mantener el
+       contenido en la misma posición visual que antes. */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
     min-height: 8rem;
-    padding: 2.6rem 1.6rem;
+    padding: 2.6rem 3.6rem;
     background-color: rgba(251, 251, 249, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -243,20 +250,26 @@ main {
 .Products-cards-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 4rem 3rem;
+    gap: 3rem 2.4rem;
     width: 100%;
     padding-bottom: 1.6rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 560px) {
     .Products-cards-container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 960px) {
+@media (min-width: 800px) {
     .Products-cards-container {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .Products-cards-container {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -297,18 +310,20 @@ main {
     color: var(--title_color);
 }
 
-/* Precio (izquierda) y peso (derecha) en la segunda fila */
+/* Peso (izquierda) y precio (derecha), ambos en la segunda fila */
 .Product-info p:nth-child(2) {
-    grid-column: 1;
-    justify-self: start;
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
     font-size: var(--font_standard);
     font-weight: 700;
     letter-spacing: 0.09rem;
 }
 
 .Product-info p:nth-child(3) {
-    grid-column: 2;
-    justify-self: end;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
     font-size: var(--font_standard);
     font-style: italic;
     opacity: 70%;
@@ -759,7 +774,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 1.4rem 4rem;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .Value-item {
