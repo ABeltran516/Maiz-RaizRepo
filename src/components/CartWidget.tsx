@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
+import { createPortal } from 'preact/compat';
 import { useStore } from '@nanostores/preact';
 import {
   cartItems,
@@ -76,6 +77,14 @@ export default function CartWidget() {
   return (
     <div class="Cart-widget">
       <button
+        class="Cart-buy"
+        onClick={pedirPorWhatsApp}
+        disabled={!hydrated || count === 0}
+        aria-label="Finalizar compra por WhatsApp"
+      >
+        Comprar
+      </button>
+      <button
         class="Cart-trigger"
         aria-label="Abrir carrito de compras"
         onClick={openCart}
@@ -88,9 +97,10 @@ export default function CartWidget() {
         )}
       </button>
 
-      {mounted && (
-        <>
-          <div class="Cart-overlay" data-state={state} onClick={closeCart} />
+      {mounted &&
+        createPortal(
+          <>
+            <div class="Cart-overlay" data-state={state} onClick={closeCart} />
           <aside
             class="Cart-panel"
             data-state={state}
@@ -160,8 +170,9 @@ export default function CartWidget() {
               </>
             )}
           </aside>
-        </>
-      )}
+          </>,
+          document.body
+        )}
     </div>
   );
 }

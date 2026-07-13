@@ -492,11 +492,105 @@ footer {
     border: .2rem solid var(--border_color);
 }
 
+/* Acción de compra en la página de producto (stepper + botón).
+   Va en global porque el botón vive en una isla y los estilos scoped
+   de Astro no alcanzan el DOM de las islas. */
+
+.Add-to-cart {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    margin-top: 1.6rem;
+    padding: 2.2rem 0;
+    border-top: 1px solid var(--line-divider);
+    border-bottom: 1px solid var(--line-divider);
+}
+
+.Qty-stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    padding: 0.4rem;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+}
+
+.Qty-btn {
+    width: 3.6rem;
+    height: 3.6rem;
+    border: none;
+    background: transparent;
+    border-radius: calc(var(--radius-sm) - 4px);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--text-heading);
+    cursor: pointer;
+    transition: background-color 140ms ease, transform 140ms var(--ease-out);
+}
+
+.Qty-btn:active {
+    transform: scale(0.9);
+}
+
+.Qty-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .Qty-btn:not(:disabled):hover {
+        background-color: var(--bg-sunken);
+    }
+}
+
+.Qty-value {
+    min-width: 3rem;
+    text-align: center;
+    font-size: var(--font_medium);
+    font-weight: 700;
+    color: var(--text-heading);
+}
+
+/* Botón CTA "size lg" del design system: ocupa el resto de la fila */
+.Product-detail-cta {
+    flex: 1;
+    min-height: 5.2rem;
+    padding: 0 2rem;
+    font-size: var(--font_medium);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
 /* Cart Widget */
 
 .Cart-widget {
     display: flex;
     align-items: center;
+    gap: 1.4rem;
+}
+
+/* Botón de compra en la navbar: se habilita solo con 1+ producto */
+.Cart-buy {
+    padding: 0.9rem 1.8rem;
+    background: var(--espresso);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: var(--font_standard);
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out), opacity 160ms ease;
+}
+
+.Cart-buy:active {
+    transform: scale(0.97);
+}
+
+.Cart-buy:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .Cart-trigger {
@@ -728,9 +822,11 @@ footer {
     opacity: 0.7;
 }
 
-/* Tarjetas clickeables del listado: invitan con una ligera elevación */
+/* Tarjetas clickeables: invitan con una ligera elevación */
 .Product-link {
     display: block;
+    text-decoration: none;
+    color: inherit;
     transition: transform 200ms var(--ease-out);
 }
 
@@ -761,7 +857,12 @@ footer {
 /* Value Strip (tira de valores bajo el hero) */
 
 .Value-strip {
-    width: 100%;
+    /* Full-bleed: ocupa el 100% del viewport aunque el <main> tenga margen lateral.
+       align-self: start neutraliza el align-items: center del <main> para que
+       el cálculo del margen (igual que en la navbar) coloque el borde en x=0. */
+    width: 100vw;
+    align-self: start;
+    margin-left: calc(50% - 50vw);
     border-top: 1px solid var(--line-divider);
     border-bottom: 1px solid var(--line-divider);
     background: var(--bg-surface);

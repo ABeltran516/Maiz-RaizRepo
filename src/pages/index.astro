@@ -9,10 +9,11 @@ import ProcessStep from '../components/ProcessStep.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
 
-// Productos destacados para la home, ordenados por el campo `orden`.
+// Productos destacados para la home (máx. 4), ordenados por el campo `orden`.
 const productos = (await getCollection('products'))
   .filter((p) => p.data.destacado && p.data.disponible)
-  .sort((a, b) => a.data.orden - b.data.orden);
+  .sort((a, b) => a.data.orden - b.data.orden)
+  .slice(0, 4);
 
 // Pasos del proceso de preparación (antes 5 bloques HTML duplicados).
 const pasos = [
@@ -67,13 +68,15 @@ const pasos = [
       <div class="Products-cards-container">
         {
           productos.map((p) => (
-            <ProductCard
-              nombre={p.data.nombre}
-              precio={p.data.precio}
-              peso={p.data.peso}
-              imagen={p.data.imagen}
-              alt={p.data.alt}
-            />
+            <a class="Product-link" href={`/productos/${p.id}`}>
+              <ProductCard
+                nombre={p.data.nombre}
+                precio={p.data.precio}
+                peso={p.data.peso}
+                imagen={p.data.imagen}
+                alt={p.data.alt}
+              />
+            </a>
           ))
         }
       </div>

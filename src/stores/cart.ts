@@ -14,17 +14,17 @@ export const cartItems = persistentAtom<CartItem[]>('maizraiz-cart', [], {
   decode: JSON.parse,
 });
 
-export function addItem(item: Omit<CartItem, 'cantidad'>) {
+export function addItem(item: Omit<CartItem, 'cantidad'>, cantidad = 1) {
   const items = cartItems.get();
   const existente = items.find((i) => i.id === item.id);
   if (existente) {
     cartItems.set(
       items.map((i) =>
-        i.id === item.id ? { ...i, cantidad: i.cantidad + 1 } : i
+        i.id === item.id ? { ...i, cantidad: i.cantidad + cantidad } : i
       )
     );
   } else {
-    cartItems.set([...items, { ...item, cantidad: 1 }]);
+    cartItems.set([...items, { ...item, cantidad }]);
   }
 }
 

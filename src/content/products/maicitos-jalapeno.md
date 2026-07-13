@@ -5,7 +5,7 @@ peso: "50g"
 imagen: "/Assets/IMG/obleas.jpg"
 alt: "Maicitos Jalapeño de Maíz & Raíz"
 disponible: true
-destacado: false
+destacado: true
 orden: 4
 ---
 
