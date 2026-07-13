@@ -563,6 +563,49 @@ footer {
     white-space: nowrap;
 }
 
+/* Quick add: agregar al carrito desde la grilla, sin entrar al producto */
+.Product-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.Quick-add {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+}
+
+.Quick-add .Qty-stepper {
+    align-self: center;
+}
+
+.Quick-add-btn {
+    width: 100%;
+    min-height: 4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-size: var(--font_standard);
+    font-weight: 500;
+}
+
+/* Stepper compacto para las cards */
+.Qty-stepper--sm {
+    padding: 0.3rem;
+}
+
+.Qty-stepper--sm .Qty-btn {
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 1.8rem;
+}
+
+.Qty-stepper--sm .Qty-value {
+    min-width: 2.6rem;
+}
+
 /* Cart Widget */
 
 .Cart-widget {

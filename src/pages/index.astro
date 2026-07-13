@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import ValueStrip from '../components/ValueStrip.astro';
 import ProductCard from '../components/ProductCard.astro';
+import QuickAdd from '../components/QuickAdd.tsx';
 import ProcessStep from '../components/ProcessStep.astro';
 import CTA from '../components/CTA.astro';
 import Footer from '../components/Footer.astro';
@@ -68,15 +69,18 @@ const pasos = [
       <div class="Products-cards-container">
         {
           productos.map((p) => (
-            <a class="Product-link" href={`/productos/${p.id}`}>
-              <ProductCard
-                nombre={p.data.nombre}
-                precio={p.data.precio}
-                peso={p.data.peso}
-                imagen={p.data.imagen}
-                alt={p.data.alt}
-              />
-            </a>
+            <div class="Product-cell">
+              <a class="Product-link" href={`/productos/${p.id}`}>
+                <ProductCard
+                  nombre={p.data.nombre}
+                  precio={p.data.precio}
+                  peso={p.data.peso}
+                  imagen={p.data.imagen}
+                  alt={p.data.alt}
+                />
+              </a>
+              <QuickAdd client:visible id={p.id} nombre={p.data.nombre} precio={p.data.precio} />
+            </div>
           ))
         }
       </div>
