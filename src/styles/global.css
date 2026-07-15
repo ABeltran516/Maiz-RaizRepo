@@ -347,6 +347,7 @@ footer {
     flex-direction: column;
     width: 90%;
     height: auto;
+    margin-top: 5rem;
 }
 
 .Build-up-section h2 {

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import QuickAdd from '../../components/QuickAdd.tsx';
 import Footer from '../../components/Footer.astro';
 
 const productos = (await getCollection('products'))
@@ -47,19 +48,18 @@ const categorias = ['Todos', 'Churritos', 'Maicitos', 'Camote', 'Jicama', 'Puffs
       <div class="Products-cards-container">
         {
           productos.map((p) => (
-            <a
-              class="Product-link"
-              href={`/productos/${p.id}`}
-              data-categoria={categoriaDe(p.data.nombre)}
-            >
-              <ProductCard
-                nombre={p.data.nombre}
-                precio={p.data.precio}
-                peso={p.data.peso}
-                imagen={p.data.imagen}
-                alt={p.data.alt}
-              />
-            </a>
+            <div class="Product-cell" data-categoria={categoriaDe(p.data.nombre)}>
+              <a class="Product-link" href={`/productos/${p.id}`}>
+                <ProductCard
+                  nombre={p.data.nombre}
+                  precio={p.data.precio}
+                  peso={p.data.peso}
+                  imagen={p.data.imagen}
+                  alt={p.data.alt}
+                />
+              </a>
+              <QuickAdd client:visible id={p.id} nombre={p.data.nombre} precio={p.data.precio} />
+            </div>
           ))
         }
       </div>
@@ -116,12 +116,12 @@ const categorias = ['Todos', 'Churritos', 'Maicitos', 'Camote', 'Jicama', 'Puffs
 
 <script>
   const chips = document.querySelectorAll<HTMLElement>('.Category-chip');
-  const cards = document.querySelectorAll<HTMLElement>('.Product-link');
+  const cells = document.querySelectorAll<HTMLElement>('.Product-cell');
 
   function applyFilter(cat: string) {
-    cards.forEach((card) => {
-      const show = cat === 'Todos' || card.dataset.categoria === cat;
-      card.style.display = show ? '' : 'none';
+    cells.forEach((cell) => {
+      const show = cat === 'Todos' || cell.dataset.categoria === cat;
+      cell.style.display = show ? '' : 'none';
     });
   }
 
