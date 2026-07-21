@@ -197,16 +197,43 @@ main {
 
 .Button-container {
     display: flex;
+    align-items: center;
     gap: 1.6rem;
     margin-top: 2rem;
-    width: 100%;
-    height: auto;
 }
 
-.Button-container button {
-    font-size: 1.3rem;
-    width: 13rem;
+/* Ambos CTAs del hero (enlace primario y botón secundario) */
+.Button-container button,
+.Button-container a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     height: 4.6rem;
+    padding: 0 2.2rem;
+    font-size: 1.3rem;
+    text-decoration: none;
+}
+
+/* CTA primario "Ver tienda": más grande, con sombra, para que domine.
+   Se escopa bajo .Button-container para ganarle en especificidad al
+   selector `.Button-container a` de arriba. */
+.Button-container .Btn-hero-primary {
+    height: 5.2rem;
+    padding: 0 3.4rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: var(--shadow-md);
+    transition:
+        transform 180ms var(--ease-out),
+        box-shadow 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .Button-container .Btn-hero-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
 }
 
 .Hero-img {
@@ -331,7 +358,9 @@ main {
 
 /* Build Up Section */
 
-footer {
+/* Footer del sitio. Va por clase, no por selector de elemento `footer`,
+   para no filtrarse a otros <footer> (p. ej. el del drawer del carrito). */
+.Site-footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -810,10 +839,33 @@ footer {
     }
 }
 
-.Cart-item-remove {
+/* Botón "Eliminar": de texto, no el cuadrito del stepper.
+   Usa mayor especificidad que `.Cart-item-qty button` en vez de !important. */
+.Cart-item-qty .Cart-item-remove {
     margin-left: auto;
-    border: none !important;
-    background: none !important;
+    width: auto;
+    height: auto;
+    padding: 0.4rem 0;
+    border: none;
+    background: none;
+    border-radius: 0;
+    font-size: var(--font_standard);
+    color: var(--tailwind_color);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: opacity 140ms ease;
+}
+
+.Cart-item-qty .Cart-item-remove:active {
+    transform: none;
+    opacity: 0.6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .Cart-item-qty .Cart-item-remove:hover {
+        background: none;
+        color: var(--text-heading);
+    }
 }
 
 .Cart-panel-footer {

@@ -148,7 +148,7 @@ export default function CartWidget() {
                           aria-label={`Eliminar ${i.nombre}`}
                           onClick={() => removeItem(i.id)}
                         >
-                          🗑
+                          Eliminar
                         </button>
                       </div>
                     </li>
