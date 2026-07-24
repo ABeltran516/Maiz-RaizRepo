@@ -1,0 +1,368 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { WHATSAPP_NUMBER, BRAND } from '../config';
+
+const prefill = `Hola ${BRAND}, tengo una pregunta:`;
+const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(prefill)}`;
+
+const faq = [
+  {
+    q: '¿Hacen envíos?',
+    a: 'Sí. Preparamos tu pedido y lo enviamos en menos de 24h, para que disfrutes nuestros productos lo más pronto posible.',
+  },
+  {
+    q: '¿Manejan precios de mayoreo?',
+    a: 'Claro. Escríbenos por WhatsApp y con gusto te compartimos nuestros precios al mayoreo.',
+  },
+  {
+    q: '¿En cuánto tiempo llega mi pedido?',
+    a: 'Hacemos el envío en menos de 24h. El tiempo de llegada depende de tu zona; te lo confirmamos todo por WhatsApp.',
+  },
+  {
+    q: '¿Qué llevan sus botanas?',
+    a: 'El ingrediente de tu botana (camote, jícama, nopal, etc.), aceite de canola y saborizante.',
+  },
+  {
+    q: '¿Son aptas para dieta vegana?',
+    a: 'Sí. Todas nuestras botanas son seguras para dietas veganas.',
+  },
+  {
+    q: '¿Cómo puedo pagar?',
+    a: 'Aceptamos pago con tarjeta o transferencia bancaria.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: BRAND,
+  url: 'https://maiz-raiz-repo.vercel.app',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    telephone: `+${WHATSAPP_NUMBER}`,
+    availableLanguage: 'Spanish',
+  },
+};
+---
+
+<Layout
+  title="Contacto | Maíz & Raíz"
+  description="¿Tienes una pregunta sobre tu pedido, mayoreo o nuestros productos? Escríbenos por WhatsApp o revisa las preguntas frecuentes."
+>
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Navbar />
+  <main>
+    <section class="Contacto-section">
+      <div class="Contacto-grid">
+        <!-- Columna izquierda: contacto directo -->
+        <div class="Contacto-info">
+          <span class="Contacto-eyebrow">¿Hablamos?</span>
+          <h1>¿Te gustaría preguntarnos algo?</h1>
+          <p class="Contacto-lede">
+            Con gusto te ayudamos con tu pedido, mayoreo o cualquier duda — {BRAND}.
+          </p>
+
+          <a class="Wa-cta" href={waHref} target="_blank" rel="noopener">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15c-1.53 0-3.03-.41-4.34-1.19l-.31-.18-3.11.82.83-3.03-.2-.32a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.25-8.24 8.25Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.65.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"
+              ></path>
+            </svg>
+            <span>Escríbenos por WhatsApp</span>
+          </a>
+
+          <div class="Hours-box">
+            <span class="Hours-status">
+              <span class="Hours-dot"></span>Respondemos en menos de 24h
+            </span>
+            <div class="Hours-divider"></div>
+            <div class="Hours-row"><span>Lun – Vie</span><strong>9h – 18h</strong></div>
+            <div class="Hours-row"><span>Sábados</span><strong>9h – 14h</strong></div>
+            <div class="Hours-row"><span>Domingos</span><em>Descansamos :)</em></div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: preguntas frecuentes -->
+        <div class="Contacto-faq">
+          <h2 class="Contacto-eyebrow">Preguntas frecuentes</h2>
+          <div class="Faq-list">
+            {
+              faq.map((item) => (
+                <details class="Faq-item" name="faq">
+                  <summary class="Faq-q">
+                    <span>{item.q}</span>
+                    <span class="Faq-sign" aria-hidden="true" />
+                  </summary>
+                  <div class="Faq-a">{item.a}</div>
+                </details>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .Contacto-section {
+    width: 90%;
+    max-width: 102rem;
+    margin: 4rem auto 5rem;
+  }
+
+  .Contacto-grid {
+    display: grid;
+    grid-template-columns: 40rem 1fr;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .Contacto-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 4.4rem 3.6rem;
+    border-right: 1px solid var(--line-divider);
+  }
+
+  .Contacto-faq {
+    padding: 4.4rem 3.6rem;
+  }
+
+  .Contacto-eyebrow {
+    display: block;
+    margin: 0 0 0.4rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-body);
+  }
+
+  .Contacto-info h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 3.2rem;
+    line-height: 1.12;
+    color: var(--text-heading);
+  }
+
+  .Contacto-lede {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+
+  /* CTA de WhatsApp */
+  .Wa-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    min-height: 5.6rem;
+    padding: 1rem 3.2rem;
+    background: var(--espresso);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: var(--radius-pill);
+    transition:
+      transform 180ms var(--ease-out),
+      box-shadow 180ms ease;
+  }
+
+  .Wa-cta:active {
+    transform: scale(0.98);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .Wa-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  /* Caja de horario */
+  .Hours-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.8rem 2rem;
+    background: var(--bg-page);
+    border: 1.5px solid var(--line-soft);
+    border-radius: var(--radius-md);
+  }
+
+  .Hours-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--hoja);
+  }
+
+  .Hours-dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: var(--radius-pill);
+    background: var(--hoja);
+  }
+
+  .Hours-divider {
+    height: 1px;
+    background: var(--line-soft);
+  }
+
+  .Hours-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    color: var(--text-body);
+  }
+
+  .Hours-row strong {
+    color: var(--text-heading);
+  }
+
+  .Hours-row em {
+    opacity: 0.8;
+  }
+
+  /* FAQ con <details> nativo (accesible, sin JS) */
+  .Faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .Faq-item {
+    border: 1.5px solid var(--line-soft);
+    border-radius: var(--radius-md);
+    background: var(--bg-page);
+    overflow: hidden;
+    transition: border-color 200ms var(--ease-out);
+  }
+
+  .Faq-item[open] {
+    border-color: var(--azul);
+  }
+
+  .Faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    padding: 1.8rem 2.2rem;
+    list-style: none;
+    cursor: pointer;
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-heading);
+  }
+
+  .Faq-q::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Signo "+" que gira a "×" al abrir */
+  .Faq-sign {
+    flex: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: grid;
+    place-items: center;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--azul);
+    transition: transform 240ms var(--ease-out);
+  }
+
+  .Faq-sign::before {
+    content: '+';
+  }
+
+  .Faq-item[open] .Faq-sign {
+    transform: rotate(45deg);
+  }
+
+  .Faq-a {
+    padding: 0 2.2rem 2rem;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: var(--text-body);
+  }
+
+  /* Animación suave al abrir/cerrar la respuesta.
+     interpolate-size permite transicionar height:auto; donde no se soporta
+     (Safari/Firefox actuales), la respuesta aparece al instante — degradación
+     limpia. `content-visibility ... allow-discrete` mantiene el contenido
+     visible durante la animación de cierre. */
+  @media (prefers-reduced-motion: no-preference) {
+    .Faq-list {
+      interpolate-size: allow-keywords;
+    }
+
+    .Faq-item::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition:
+        block-size 300ms var(--ease-out),
+        opacity 260ms var(--ease-out),
+        content-visibility 300ms allow-discrete;
+    }
+
+    .Faq-item[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .Faq-item:not([open]):hover {
+      border-color: var(--azul);
+    }
+  }
+
+  /* Responsive: una sola columna */
+  @media (max-width: 820px) {
+    .Contacto-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .Contacto-info {
+      border-right: none;
+      border-bottom: 1px solid var(--line-divider);
+    }
+
+    /* Menos padding lateral para que el texto respire y quede centrado */
+    .Wa-cta {
+      padding-left: 1.6rem;
+      padding-right: 1.6rem;
+    }
+  }
+</style>
