@@ -521,6 +521,8 @@ main {
 .Btn-color2 {
     background-color: var(--background_main);
     border: .2rem solid var(--border_color);
+    color: var(--text-heading);
+    font-weight: 500;
 }
 
 /* Acción de compra en la página de producto (stepper + botón).
