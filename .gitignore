@@ -13,3 +13,5 @@ npm-debug.log*
 .DS_Store
 # Claude Code local settings (personal, no versionar)
 .claude/settings.local.json
+# Fotos crudas sin procesar (las procesadas viven en src/assets/products)
+raw-pictures/

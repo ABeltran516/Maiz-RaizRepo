@@ -2,7 +2,7 @@
 nombre: "Camote Jalapeño"
 precio: 40
 peso: "50g"
-imagen: "/Assets/IMG/garbanzo.jpg"
+imagen: "../../assets/products/camote-jalapeno.jpg"
 alt: "Camote Jalapeño de Maíz & Raíz"
 disponible: true
 destacado: false

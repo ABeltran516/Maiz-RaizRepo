@@ -2,7 +2,7 @@
 nombre: "Puffs Flamin Hot"
 precio: 30
 peso: "50g"
-imagen: "/Assets/IMG/platano.jpg"
+imagen: "../../assets/products/puffs-flamin-hot.jpg"
 alt: "Puffs Flamin Hot de Maíz & Raíz"
 disponible: true
 destacado: false

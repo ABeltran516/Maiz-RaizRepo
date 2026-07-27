@@ -2,7 +2,7 @@
 nombre: "Churritos Nopal"
 precio: 40
 peso: "70g"
-imagen: "/Assets/IMG/betabel.jpg"
+imagen: "../../assets/products/churritos-nopal.jpg"
 alt: "Churritos Nopal de Maíz & Raíz"
 disponible: true
 destacado: true

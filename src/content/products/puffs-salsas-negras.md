@@ -2,7 +2,7 @@
 nombre: "Puffs Salsas Negras"
 precio: 30
 peso: "50g"
-imagen: "/Assets/IMG/obleas.jpg"
+imagen: "../../assets/products/puffs-salsas-negras.jpg"
 alt: "Puffs Salsas Negras de Maíz & Raíz"
 disponible: true
 destacado: false

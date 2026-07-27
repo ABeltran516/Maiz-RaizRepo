@@ -6,16 +6,20 @@ import { glob } from 'astro/loaders';
 // si falta el precio o el tipo no coincide, el build falla y te avisa.
 const products = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/products' }),
-  schema: z.object({
-    nombre: z.string(),
-    precio: z.number().positive(),
-    peso: z.string(),
-    imagen: z.string(),
-    alt: z.string().optional(),
-    disponible: z.boolean().default(true),
-    destacado: z.boolean().default(false),
-    orden: z.number().default(0),
-  }),
+  // El helper image() valida la imagen y habilita la optimización de
+  // astro:assets (WebP/AVIF, srcset responsivo). La ruta en el frontmatter
+  // se resuelve relativa al archivo .md.
+  schema: ({ image }) =>
+    z.object({
+      nombre: z.string(),
+      precio: z.number().positive(),
+      peso: z.string(),
+      imagen: image(),
+      alt: z.string().optional(),
+      disponible: z.boolean().default(true),
+      destacado: z.boolean().default(false),
+      orden: z.number().default(0),
+    }),
 });
 
 export const collections = { products };
