@@ -89,7 +89,15 @@ export default function CartWidget() {
         aria-label="Abrir carrito de compras"
         onClick={openCart}
       >
-        <img src="/Assets/shopping_icon.svg" alt="" width="24" height="24" />
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 -960 960 960"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M200-80q-33 0-56.5-23.5T120-160v-480q0-33 23.5-56.5T200-720h80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720h80q33 0 56.5 23.5T840-640v480q0 33-23.5 56.5T760-80H200Zm0-80h560v-480h-80v80q0 17-11.5 28.5T640-520q-17 0-28.5-11.5T600-560v-80H360v80q0 17-11.5 28.5T320-520q-17 0-28.5-11.5T280-560v-80h-80v480Zm160-560h240q0-50-35-85t-85-35q-50 0-85 35t-35 85ZM200-160v-480 480Z" />
+        </svg>
         {hydrated && count > 0 && (
           <span class="Cart-badge" data-pop={pop}>
             {count}

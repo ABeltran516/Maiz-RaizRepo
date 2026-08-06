@@ -12,6 +12,13 @@ body {
     height: 100%;
 }
 
+/* Scroll suave al saltar a anclas (ej. "Proceso" del navbar) */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 html {
     font-family: var(--font-sans);
     font-weight: 400;
@@ -115,19 +122,49 @@ body {
     margin-left: calc(50% - 50vw);
     min-height: 8rem;
     padding: 2.6rem 3.6rem;
-    background-color: rgba(251, 251, 249, 0.7);
+    background-color: var(--bg-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(75, 85, 99, 0.15);
+    border-bottom: 1px solid var(--line-divider);
 }
 
-.Nav-bar a {
+.Nav-logo {
+    font-family: var(--font-sans);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--text-heading);
     text-decoration: none;
 }
 
-.Nav-bar a span {
-    font-size: 1.8rem;
-    color: var(--title_color);
+.Nav-logo-accent {
+    font-style: italic;
+    color: var(--azul);
+}
+
+/* Navegación central: oculta en móvil para no saturar la barra */
+.Nav-links {
+    display: none;
+    gap: 3.4rem;
+}
+
+.Nav-links a {
+    font-family: var(--font-sans);
+    font-size: 1.45rem;
+    color: var(--text-body);
+    text-decoration: none;
+    transition: color 160ms ease;
+}
+
+.Nav-links a:hover {
+    color: var(--azul);
+}
+
+@media (min-width: 860px) {
+    .Nav-links {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .Shopping-cart {
@@ -378,6 +415,8 @@ main {
     width: 90%;
     height: auto;
     margin-top: 5rem;
+    /* Evita que el navbar sticky tape el título al llegar por el ancla #proceso */
+    scroll-margin-top: 9rem;
 }
 
 .Build-up-section h2 {

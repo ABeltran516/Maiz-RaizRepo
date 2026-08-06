@@ -1,10 +1,21 @@
 ---
 import CartWidget from './CartWidget.tsx';
+
+const links = [
+  { label: 'Tienda', href: '/productos' },
+  { label: 'Proceso', href: '/#proceso' },
+  { label: 'Contacto', href: '/contacto' },
+];
 ---
 
 <nav class="Nav-bar">
-  <a href="/">
-    <span>Maíz & Raíz</span>
+  <a class="Nav-logo" href="/">
+    Maíz <span class="Nav-logo-accent">&amp;</span> Raíz
   </a>
+
+  <div class="Nav-links">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+
   <CartWidget client:load />
 </nav>
