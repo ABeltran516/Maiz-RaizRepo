@@ -9,5 +9,4 @@ destacado: true
 orden: 1
 ---
 
-Churritos de maíz horneados con sabor Flamin Hot. Crujientes y picositos, sin
-freír ni aditivos.
+Churritos de maíz horneados con sabor Flamin Hot. Muy crujientes y picantes.

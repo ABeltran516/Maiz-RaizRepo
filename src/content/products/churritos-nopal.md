@@ -9,5 +9,4 @@ destacado: true
 orden: 2
 ---
 
-Churritos de maíz con nopal. El crujido de siempre con un toque verde, horneados
-sin freír.
+Churritos de nopal, sabor clásico con un toque de sal. Ideales para botanear.

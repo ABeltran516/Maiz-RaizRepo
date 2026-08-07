@@ -9,4 +9,4 @@ destacado: false
 orden: 8
 ---
 
-Camote con jalapeño. El dulce del camote con el picor del jalapeño, sin aditivos.
+Camote deshidratado, horneado, ligeramente frito y centrifugado para retirar el exceso de aceite. Sabor jalapeño.

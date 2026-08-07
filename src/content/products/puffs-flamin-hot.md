@@ -9,4 +9,4 @@ destacado: false
 orden: 10
 ---
 
-Puffs con sabor Flamin Hot. Ligeros, crujientes y picositos, horneados sin freír.
+Puffs de garbanzo, inflados con aire caliente para un resultado crujiente. Sabor Flamin Hot.

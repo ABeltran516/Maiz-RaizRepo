@@ -9,5 +9,4 @@ destacado: true
 orden: 4
 ---
 
-Maicitos con sabor jalapeño. Un picor fresco en cada bocado, horneados sin grasa
-de más.
+Maíz inflado con aire caliente. Combinación entre crujiente y esponjoso. Sabor Queso-Jalapeño.

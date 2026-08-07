@@ -9,5 +9,4 @@ destacado: true
 orden: 3
 ---
 
-Maicitos crujientes con sabor Flamin Hot. Picositos y ligeros, sin colorantes
-artificiales.
+Maíz inflado con aire caliente. Combinación entre crujiente y esponjoso. Sabor Flamin Hot.

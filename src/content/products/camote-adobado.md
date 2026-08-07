@@ -9,4 +9,4 @@ destacado: false
 orden: 7
 ---
 
-Camote deshidratado y adobado. Dulce y picosito, horneado sin freír.
+Camote deshidratado, horneado, ligeramente frito y centrifugado para retirar el exceso de aceite. Sabor adobado.

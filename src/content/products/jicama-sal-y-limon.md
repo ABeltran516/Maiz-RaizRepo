@@ -9,4 +9,4 @@ destacado: false
 orden: 6
 ---
 
-Jícama con sal y limón. Fresca y ácida, deshidratada sin aditivos ni colorantes.
+Jícama deshidratada, horneada, ligeramente frita y centrifugada para retirar el exceso de aceite. Con el sabor de las botanas clásicas saladas.

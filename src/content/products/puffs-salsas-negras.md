@@ -9,5 +9,4 @@ destacado: false
 orden: 9
 ---
 
-Puffs con salsas negras. Aireados y crujientes, con un sabor intenso y sin
-colorantes raros.
+Puffs de garbanzo, inflados con aire caliente para un resultado crujiente. Sabor Salsas Negras.
