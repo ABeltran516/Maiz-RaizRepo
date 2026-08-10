@@ -1,0 +1,159 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const valores = [
+  {
+    titulo: "Horneadas, con el aceite justo",
+    texto:
+      "Deshidratamos y horneamos primero. El aceite se usa con medida, solo lo necesario para lograr la textura — nada de saturar.",
+  },
+  {
+    titulo: "Sin aditivos ni colorantes",
+    texto:
+      "Sazonamos con especias reales. Cero potenciadores de sabor artificial, cero colores que no tienen por qué estar ahí.",
+  },
+  {
+    titulo: "Ingredientes que reconoces",
+    texto:
+      "Camote, jícama, nopal, maíz, garbanzo. Lo que ves en el empaque es lo que hay dentro.",
+  },
+  {
+    titulo: "Aptas para dieta vegana",
+    texto:
+      "Todas nuestras botanas están hechas para que cualquiera pueda disfrutarlas sin preocuparse.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Nosotros | Maíz & Raíz",
+  url: "https://www.maizyraiz.com/nosotros",
+};
+---
+
+<Layout
+  title="Nosotros | Maíz & Raíz"
+  description="Así nació Maíz & Raíz: botanas horneadas y deshidratadas, con pocos ingredientes y el aceite justo, hechas con paciencia."
+>
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Navbar />
+  <main>
+    <section class="Nosotros-section">
+      <span class="Nosotros-eyebrow">Quiénes somos</span>
+      <h1>Así nació Maíz & Raíz</h1>
+      <p class="Nosotros-lede">
+        Nació de las ganas de hacer una botana con pocos ingredientes, de
+        origen local y a un precio accesible — sencilla y honesta, como nos
+        gusta comer.
+      </p>
+      <p class="Nosotros-parrafo">
+        Por eso deshidratamos, horneamos y usamos solo el aceite justo para
+        lograr esa textura — nada de saturar de grasa. Sazonamos con especias
+        reales y cuidamos que cada botana sea apta para dietas veganas. Lo
+        demás es simple: ingredientes que reconoces, hechos con paciencia.
+      </p>
+
+      <div class="Valores-grid">
+        {
+          valores.map((v) => (
+            <div class="Valor-card">
+              <h2>{v.titulo}</h2>
+              <p>{v.texto}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="Button-container">
+        <a class="Btn-color1 Btn-hero-primary" href="/productos"
+          >Conoce la tienda</a
+        >
+        <a class="Btn-color2" href="/contacto">Escríbenos</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .Nosotros-section {
+    width: 90%;
+    max-width: 76rem;
+    margin: 5rem auto 6rem;
+  }
+
+  .Nosotros-eyebrow {
+    display: block;
+    margin-bottom: 1.4rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-body);
+  }
+
+  .Nosotros-section h1 {
+    margin: 0 0 2.2rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 3.6rem;
+    line-height: 1.12;
+    color: var(--text-heading);
+  }
+
+  .Nosotros-lede {
+    margin: 0 0 1.6rem;
+    font-size: 1.8rem;
+    line-height: 1.55;
+    color: var(--text-heading);
+  }
+
+  .Nosotros-parrafo {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: var(--text-body);
+    max-width: 64ch;
+  }
+
+  .Valores-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 4.4rem 0;
+  }
+
+  .Valor-card {
+    padding: 2.4rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-md);
+  }
+
+  .Valor-card h2 {
+    margin: 0 0 0.8rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text-heading);
+  }
+
+  .Valor-card p {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+
+  @media (max-width: 720px) {
+    .Valores-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
