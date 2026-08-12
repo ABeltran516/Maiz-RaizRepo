@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ToastHost from '../components/ToastHost.tsx';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title?: string;
@@ -53,5 +54,6 @@ const ogImage = new URL(image, Astro.site);
   <body>
     <slot />
     <ToastHost client:load />
+    <Analytics />
   </body>
 </html>

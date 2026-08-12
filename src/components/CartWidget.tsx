@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { createPortal } from 'preact/compat';
 import { useStore } from '@nanostores/preact';
+import { track } from '@vercel/analytics';
 import {
   cartItems,
   changeQty,
@@ -61,6 +62,7 @@ export default function CartWidget() {
   }, [mounted]);
 
   const pedirPorWhatsApp = () => {
+    track('click_comprar', { total, productos: count });
     const lineas = items.map(
       (i) => `• ${i.cantidad}x ${i.nombre} ($${i.precio * i.cantidad})`
     );

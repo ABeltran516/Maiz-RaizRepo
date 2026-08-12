@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { track } from '@vercel/analytics';
 import { addItem } from '../stores/cart';
 import { showToast } from '../stores/toast';
 
@@ -18,6 +19,7 @@ export default function QuickAdd({ id, nombre, precio }: Props) {
 
   const add = () => {
     addItem({ id, nombre, precio }, qty);
+    track('agregar_carrito', { producto: nombre, cantidad: qty, origen: 'grilla' });
     showToast(`${qty > 1 ? qty + '× ' : ''}${nombre} agregado`);
     setQty(1);
   };

@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { track } from '@vercel/analytics';
 import { addItem } from '../stores/cart';
 import { showToast } from '../stores/toast';
 
@@ -20,6 +21,7 @@ export default function AddToCartButton({ id, nombre, precio }: Props) {
 
   const handleClick = () => {
     addItem({ id, nombre, precio }, qty);
+    track('agregar_carrito', { producto: nombre, cantidad: qty, origen: 'detalle' });
     showToast(`${qty > 1 ? qty + '× ' : ''}${nombre} agregado`);
     // Blur breve que enmascara el swap de texto.
     setSwapping(true);
