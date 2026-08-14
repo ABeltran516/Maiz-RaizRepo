@@ -3,6 +3,12 @@
     padding: 0;
     margin: 0;
     scrollbar-width: none;
+    /* Apaga el recuadro azul nativo al tocar en móvil (Android/Chrome).
+       El sitio ya da su propio feedback de press (scale en :active), así
+       que el resaltado nativo queda redundante y desentona con la paleta.
+       No afecta el anillo de foco de teclado (:focus-visible), que es
+       una cosa distinta y se mantiene intacto para accesibilidad. */
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -625,14 +631,132 @@ main {
     color: var(--text-heading);
 }
 
-/* Botón CTA "size lg" del design system: ocupa el resto de la fila */
+/* Botón CTA "size lg" del design system: ocupa el resto de la fila.
+   min-width: 0 permite que un flex-item se encoja por debajo del ancho de
+   su contenido; sin esto, un texto largo ("Agregar al carrito · $XX MXN")
+   nunca cede espacio y desborda la fila en pantallas angostas. Quitamos
+   white-space: nowrap como red de seguridad: si aun así no cabe, el texto
+   se parte en 2 líneas en vez de salirse del contenedor. */
 .Product-detail-cta {
     flex: 1;
+    min-width: 0;
     min-height: 5.2rem;
     padding: 0 2rem;
     font-size: var(--font_medium);
     font-weight: 500;
-    white-space: nowrap;
+}
+
+/* Botón "Agregar al carrito": crossfade idle → éxito con blur + scale,
+   inspirado en la animación de Emil Kowalski. addItem() es una mutación
+   local instantánea (sin backend), así que se omite el estado "loading"
+   del diseño original: simular una espera solo restaría velocidad
+   percibida sin ningún beneficio real. */
+.Buy-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.Buy-btn {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.Buy-btn[data-success='true'] {
+    background-color: var(--hoja);
+    /* mismo tono de --hoja con alpha, para el anillo de énfasis */
+    box-shadow: 0 0 0 5px oklch(0.62 0.13 145 / 20%);
+}
+
+.Buy-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(3px);
+    transition:
+        opacity 180ms var(--ease-out),
+        transform 180ms var(--ease-out),
+        filter 180ms var(--ease-out);
+}
+
+.Buy-layer[data-active='true'] {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+.Buy-icon {
+    flex: none;
+}
+
+.Buy-check path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+    transition: stroke-dashoffset 260ms var(--ease-out) 80ms;
+}
+
+.Buy-btn[data-success='true'] .Buy-check path {
+    stroke-dashoffset: 0;
+}
+
+/* "+N" que sube y se desvanece al agregar — delight puntual para una
+   acción ocasional, no repetitiva (no aplica en el stepper ni en clics
+   de teclado). */
+.Fly-badge {
+    position: absolute;
+    top: -1rem;
+    right: 1.4rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--espresso);
+    background: var(--bg-surface);
+    border: 1px solid var(--line-soft);
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    pointer-events: none;
+    animation: fly-badge 700ms var(--ease-out) forwards;
+}
+
+@keyframes fly-badge {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.9);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateY(-0.6rem) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-2.6rem) scale(1);
+    }
+}
+
+/* En pantallas angostas, stepper y botón se apilan en vez de compartir
+   fila — evita que el botón tenga que partirse en 2 líneas en el caso
+   común, y se ve más ordenado que un botón alto junto a un stepper corto. */
+@media (max-width: 480px) {
+    .Add-to-cart {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .Add-to-cart .Qty-stepper {
+        align-self: center;
+    }
 }
 
 /* Quick add: agregar al carrito desde la grilla, sin entrar al producto */
@@ -659,7 +783,6 @@ main {
     gap: 0.6rem;
     font-size: var(--font_standard);
     font-weight: 500;
-    white-space: nowrap;
 }
 
 /* Stepper compacto para las cards */
