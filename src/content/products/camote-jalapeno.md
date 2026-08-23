@@ -4,7 +4,7 @@ precio: 40
 peso: "50g"
 imagen: "../../assets/products/camote-jalapeno.jpg"
 alt: "Camote Jalapeño de Maíz & Raíz"
-disponible: true
+disponible: false
 destacado: false
 orden: 8
 ---

@@ -4,7 +4,7 @@ precio: 40
 peso: "70g"
 imagen: "../../assets/products/churritos-flamin-hot.jpg"
 alt: "Churritos Flamin Hot de Maíz & Raíz"
-disponible: true
+disponible: false
 destacado: true
 orden: 1
 ---

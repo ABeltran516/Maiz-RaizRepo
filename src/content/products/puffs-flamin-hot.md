@@ -4,7 +4,7 @@ precio: 30
 peso: "50g"
 imagen: "../../assets/products/puffs-flamin-hot.jpg"
 alt: "Puffs Flamin Hot de Maíz & Raíz"
-disponible: true
+disponible: false
 destacado: false
 orden: 10
 ---

@@ -6,9 +6,9 @@ import ProductCard from '../../components/ProductCard.astro';
 import QuickAdd from '../../components/QuickAdd.tsx';
 import Footer from '../../components/Footer.astro';
 
-const productos = (await getCollection('products'))
-  .filter((p) => p.data.disponible)
-  .sort((a, b) => a.data.orden - b.data.orden);
+const productos = (await getCollection('products')).sort(
+  (a, b) => a.data.orden - b.data.orden,
+);
 
 // Categoría derivada del nombre: primera palabra, sin acentos ("Jícama" -> "Jicama").
 const categoriaDe = (nombre: string) =>
@@ -56,9 +56,16 @@ const categorias = ['Todos', 'Churritos', 'Maicitos', 'Camote', 'Jicama', 'Puffs
                   peso={p.data.peso}
                   imagen={p.data.imagen}
                   alt={p.data.alt}
+                  disponible={p.data.disponible}
                 />
               </a>
-              <QuickAdd client:visible id={p.id} nombre={p.data.nombre} precio={p.data.precio} />
+              <QuickAdd
+                client:visible
+                id={p.id}
+                nombre={p.data.nombre}
+                precio={p.data.precio}
+                disponible={p.data.disponible}
+              />
             </div>
           ))
         }

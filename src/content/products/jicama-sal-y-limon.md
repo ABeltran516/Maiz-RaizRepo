@@ -1,7 +1,7 @@
 ---
 nombre: "Jícama Sal y Limón"
-precio: 40
-peso: "50g"
+precio: 35
+peso: "40g"
 imagen: "../../assets/products/jicama-sal-y-limon.jpg"
 alt: "Jícama Sal y Limón de Maíz & Raíz"
 disponible: true

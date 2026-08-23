@@ -6,6 +6,7 @@ interface Props {
   id: string;
   nombre: string;
   precio: number;
+  disponible?: boolean;
 }
 
 type EstadoBoton = 'idle' | 'success';
@@ -13,12 +14,20 @@ type EstadoBoton = 'idle' | 'success';
 // Control compacto para agregar al carrito desde la grilla de productos,
 // sin entrar a la página del producto. Comparte la animación de éxito
 // (.Buy-*) con AddToCartButton — misma sensación en todo el sitio.
-export default function QuickAdd({ id, nombre, precio }: Props) {
+export default function QuickAdd({ id, nombre, precio, disponible = true }: Props) {
   const [qty, setQty] = useState(1);
   const [estado, setEstado] = useState<EstadoBoton>('idle');
 
   const dec = () => setQty((q) => Math.max(1, q - 1));
   const inc = () => setQty((q) => Math.min(99, q + 1));
+
+  if (!disponible) {
+    return (
+      <div class="Quick-add">
+        <span class="Quick-add-agotado">Agotado por ahora</span>
+      </div>
+    );
+  }
 
   const add = () => {
     addItem({ id, nombre, precio }, qty);

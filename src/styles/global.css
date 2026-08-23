@@ -344,6 +344,7 @@ main {
 }
 
 .Products-cards {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -359,6 +360,26 @@ main {
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius-md);
+}
+
+/* Producto sin stock: la foto se atenúa para no competir con la leyenda */
+.Products-cards[data-agotado='true'] img {
+    opacity: 0.55;
+}
+
+.Agotado-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1.2rem;
+    background: var(--espresso);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-md);
 }
 
 .Product-info {
@@ -771,6 +792,16 @@ main {
     align-items: center;
     gap: 0.8rem;
     margin-top: 1.2rem;
+}
+
+.Quick-add-agotado {
+    min-height: 4rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--font_standard);
+    font-style: italic;
+    color: var(--text-body);
+    opacity: 0.7;
 }
 
 .Quick-add-btn {

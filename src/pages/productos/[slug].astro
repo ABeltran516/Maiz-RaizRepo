@@ -52,13 +52,16 @@ const jsonLd = {
   <Navbar />
   <main>
     <article class="Product-detail">
-      <Image
-        class="Product-detail-img"
-        src={data.imagen}
-        alt={data.alt ?? data.nombre}
-        widths={[480, 720]}
-        sizes="(min-width: 768px) 50vw, 90vw"
-      />
+      <div class="Product-detail-media" data-agotado={!data.disponible}>
+        <Image
+          class="Product-detail-img"
+          src={data.imagen}
+          alt={data.alt ?? data.nombre}
+          widths={[480, 720]}
+          sizes="(min-width: 768px) 50vw, 90vw"
+        />
+        {!data.disponible && <span class="Agotado-badge">Agotado</span>}
+      </div>
       <div class="Product-detail-info">
         <a class="Product-detail-back" href="/productos">← Volver a productos</a>
         <h1>{data.nombre}</h1>
@@ -94,10 +97,19 @@ const jsonLd = {
     margin: 3.4rem auto;
   }
 
+  .Product-detail-media {
+    position: relative;
+    width: 100%;
+  }
+
   .Product-detail-img {
     width: 100%;
     height: auto;
     border-radius: var(--radius-lg);
+  }
+
+  .Product-detail-media[data-agotado='true'] .Product-detail-img {
+    opacity: 0.55;
   }
 
   .Product-detail-info {
@@ -147,7 +159,7 @@ const jsonLd = {
       gap: 4.6rem;
     }
 
-    .Product-detail-img {
+    .Product-detail-media {
       width: min(50rem, 50%);
     }
   }

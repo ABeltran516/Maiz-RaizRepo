@@ -9,12 +9,13 @@ interface Props {
   peso: string;
   imagen: ImageMetadata;
   alt?: string;
+  disponible?: boolean;
 }
 
-const { nombre, precio, peso, imagen, alt } = Astro.props;
+const { nombre, precio, peso, imagen, alt, disponible = true } = Astro.props;
 ---
 
-<div class="Products-cards">
+<div class="Products-cards" data-agotado={!disponible}>
   <Image
     src={imagen}
     alt={alt ?? nombre}
@@ -22,6 +23,7 @@ const { nombre, precio, peso, imagen, alt } = Astro.props;
     sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
     loading="lazy"
   />
+  {!disponible && <span class="Agotado-badge">Agotado</span>}
   <div class="Product-info">
     <h3>{nombre}</h3>
     <p>${precio} MXN</p>
