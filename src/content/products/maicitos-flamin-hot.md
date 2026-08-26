@@ -2,7 +2,7 @@
 nombre: "Maicitos Flamin Hot"
 precio: 35
 peso: "50g"
-imagen: "../../assets/products/maicitos-flamin-hot.jpg"
+imagen: "../../assets/products/maicitos-flamin-hot.png"
 alt: "Maicitos Flamin Hot de Maíz & Raíz"
 disponible: true
 destacado: true

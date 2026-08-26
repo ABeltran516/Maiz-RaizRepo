@@ -100,12 +100,17 @@ const jsonLd = {
   .Product-detail-media {
     position: relative;
     width: 100%;
+    /* Misma charola de color que las cards del catálogo, para que el
+       recorte transparente del producto no quede flotando directo sobre
+       el fondo de la página. */
+    background: var(--bg-sunken);
+    padding: 3.2rem;
+    border-radius: var(--radius-lg);
   }
 
   .Product-detail-img {
     width: 100%;
     height: auto;
-    border-radius: var(--radius-lg);
   }
 
   .Product-detail-media[data-agotado='true'] .Product-detail-img {

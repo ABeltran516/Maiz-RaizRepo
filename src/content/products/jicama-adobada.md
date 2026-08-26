@@ -2,7 +2,7 @@
 nombre: "Jícama Adobada"
 precio: 35
 peso: "40g"
-imagen: "../../assets/products/jicama-adobada.jpg"
+imagen: "../../assets/products/jicama-adobada.png"
 alt: "Jícama Adobada de Maíz & Raíz"
 disponible: true
 destacado: false

@@ -350,6 +350,12 @@ main {
     width: 100%;
     min-width: 0;
     height: auto;
+    /* Charola de color detrás del recorte transparente: sin esto el producto
+       "flota" directo sobre el fondo de la página, sin ningún borde que lo
+       distinga como tarjeta. */
+    background: var(--bg-sunken);
+    padding: 1.8rem;
+    border-radius: var(--radius-md);
 }
 
 /* Proporción cuadrada uniforme: todas las cards quedan del mismo tamaño
@@ -358,8 +364,7 @@ main {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: var(--radius-md);
+    object-fit: contain;
 }
 
 /* Producto sin stock: la foto se atenúa para no competir con la leyenda */
