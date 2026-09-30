@@ -15,3 +15,5 @@ npm-debug.log*
 .claude/settings.local.json
 # Fotos crudas sin procesar (las procesadas viven en src/assets/products)
 raw-pictures/
+# Notas internas de negocio (saborizantes, plan de redes) — no son del sitio
+docs/
