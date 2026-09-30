@@ -4,7 +4,7 @@ precio: 35
 peso: "50g"
 imagen: "../../assets/products/maicitos-jalapeno.jpg"
 alt: "Maicitos Jalapeño de Maíz & Raíz"
-disponible: true
+disponible: false
 destacado: true
 orden: 4
 ---
