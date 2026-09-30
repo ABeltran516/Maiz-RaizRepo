@@ -5,7 +5,7 @@ peso: "40g"
 imagen: "../../assets/products/jicama-flamin-hot.png"
 alt: "Jícama Flamin Hot de Maíz & Raíz"
 disponible: true
-destacado: false
+destacado: true
 orden: 11
 ---
 

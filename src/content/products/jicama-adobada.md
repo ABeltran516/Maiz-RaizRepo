@@ -5,7 +5,7 @@ peso: "40g"
 imagen: "../../assets/products/jicama-adobada.png"
 alt: "Jícama Adobada de Maíz & Raíz"
 disponible: true
-destacado: false
+destacado: true
 orden: 5
 ---
 
