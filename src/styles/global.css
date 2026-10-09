@@ -43,8 +43,15 @@ textarea {
     font-family: inherit;
 }
 
+/* Anillo de foco de teclado propio: el de por defecto casi no se distingue
+   sobre el botón espresso. Solo :focus-visible, para que no aparezca al
+   hacer clic con el mouse. */
+:focus-visible {
+    outline: 2px solid var(--azul);
+    outline-offset: 3px;
+}
+
 /* Títulos statement en fuente display (DM Serif Display) */
-.Hero-section h1,
 .Product-detail-info h1 {
     font-family: var(--font-display);
     color: var(--text-heading);
@@ -203,41 +210,6 @@ main {
     background-color: var(--background_main);
 }
 
-.Hero-section {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    height: auto;
-    margin: 3.4rem 0;
-}
-
-.Hero-section-info {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-}
-
-.Hero-section span {
-    font-size: var(--font_standard);
-    color: var(--title_color);
-    opacity: 70%;
-    margin-bottom: 1.6rem;
-}
-
-.Hero-section h1 {
-    font-size: 4.2rem;
-    font-weight: bold;
-    font-style: italic;
-    margin-bottom: 2rem;
-}
-
-.Hero-section p {
-    font-size: 1.6rem;
-    opacity: 60%;
-    line-height: 1.5;
-}
-
 .Button-container {
     display: flex;
     align-items: center;
@@ -279,11 +251,11 @@ main {
     }
 }
 
-.Hero-img {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-top: 3.6rem;
+/* El :hover de arriba tiene más especificidad que `.Btn-color1:active`, así
+   que sin esta regla el botón no respondía al press con mouse. Va después
+   del hover a propósito: con la misma especificidad, gana la última. */
+.Button-container .Btn-hero-primary:active {
+    transform: scale(0.97);
 }
 
 /* Products Section */
@@ -541,33 +513,6 @@ main {
 
 /* Media Queries */
 
-@media screen and (min-width: 768px) {
-    .Hero-section {
-        /* display: flex; */
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        min-height: 60rem;
-        gap: 2.6rem;
-        padding: 1.6rem;
-        overflow: hidden;
-        /* width: 90%;
-        height: auto;
-        margin: 3.4rem 0; */
-    }
-
-    .Hero-section-info {
-        width: min(60rem, 50%);
-    }
-
-    .Hero-img {
-        display: block;
-        width: min(60rem, 50%);
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
-}
 
 /* Extra Styles */
 

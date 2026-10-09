@@ -1,25 +1,160 @@
 ---
-// Sección principal (hero) con el titular H1 y los CTAs.
+// Sección principal (hero): foto a sangre con el texto encima.
+// En móvil el texto va sobre la banda blanca superior de la foto cuadrada;
+// en escritorio, sobre el espacio libre derecho de la versión extendida a 16:9.
+import { getImage } from 'astro:assets';
+import cuadrada from '../assets/hero/maicitos-cuadrada.jpg';
+import ancha from '../assets/hero/maicitos-ancha.jpg';
+
+const movil = await getImage({ src: cuadrada, widths: [430, 640, 860], format: 'webp' });
+const escritorio = await getImage({ src: ancha, widths: [1280, 1920, 2560], format: 'webp' });
+const respaldo = await getImage({ src: cuadrada, width: 860, format: 'jpeg' });
 ---
 
-<section class="Hero-section">
-  <div class="Hero-section-info">
-    <span>HECHO CON PACIENCIA</span>
-    <h1>Botana saludable, ingredientes simples</h1>
-    <p>
-      Conoce los productos saludables de Maíz & Raíz, sin aditivos ni
-      colorantes.
-    </p>
+<section class="Hero">
+  <picture>
+    <source
+      media="(min-width: 860px)"
+      type="image/webp"
+      srcset={escritorio.srcSet.attribute}
+      sizes="100vw"
+    />
+    <source type="image/webp" srcset={movil.srcSet.attribute} sizes="100vw" />
+    <img
+      src={respaldo.src}
+      width="860"
+      height="860"
+      alt="Dos tazones con maicitos de Maíz & Raíz"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+
+  <div class="Hero-texto">
+    <span class="Hero-eyebrow">HECHO CON PACIENCIA</span>
+    <h1>¡Solo un maicito más!</h1>
+    <p>Lo crujiente y lo saludable por fin se encontraron</p>
     <div class="Button-container">
       <a class="Btn-color1 Btn-hero-primary" href="/productos">Ver tienda</a>
-      <a class="Btn-color2" href="/contacto">Contacto</a>
+      <a class="Hero-link-sec" href="/contacto">Contacto</a>
     </div>
   </div>
-  <img
-    class="Hero-img"
-    src="/Assets/IMG/all-chips.jpg"
-    alt="Variedad de chips saludables de Maíz & Raíz"
-    width="600"
-    height="600"
-  />
 </section>
+
+<style>
+  .Hero {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .Hero img {
+    display: block;
+    width: 100%;
+    /* Altura fija en móvil: la foto cuadrada no deja aire suficiente
+       sobre los tazones para el bloque de texto. */
+    height: clamp(46rem, 72vh, 68rem);
+    object-fit: cover;
+    object-position: center 18%;
+  }
+
+  .Hero-texto {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: clamp(2.4rem, 6vw, 4rem) 2rem 0;
+  }
+
+  .Hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--text-body);
+    opacity: 0.75;
+  }
+
+  .Hero-texto h1 {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    color: var(--text-heading);
+    font-size: clamp(3.6rem, 5.2vw, 6.4rem);
+    line-height: 1.02;
+    margin: 1.2rem 0 1.4rem;
+    text-wrap: balance;
+  }
+
+  .Hero-texto p {
+    font-family: var(--font-sans);
+    font-size: clamp(1.6rem, 1.6vw, 1.9rem);
+    color: var(--text-body);
+    max-width: 30ch;
+    margin: 0 0 2.6rem;
+  }
+
+  .Hero-link-sec {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    color: var(--text-body);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition:
+      color 160ms ease,
+      opacity 160ms var(--ease-out);
+  }
+
+  .Hero-link-sec:active {
+    opacity: 0.7;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .Hero-link-sec:hover {
+      color: var(--text-heading);
+    }
+  }
+
+  /* Escritorio: foto extendida a 16:9 y texto en el espacio libre derecho */
+  @media (min-width: 860px) {
+    .Hero img {
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-position: center;
+    }
+
+    .Hero-texto {
+      inset: 0 0 0 auto;
+      width: 46%;
+      max-width: 46rem;
+      justify-content: center;
+      padding: 0 clamp(2rem, 4vw, 6rem) 0 0;
+    }
+  }
+
+  /* La entrada guía el ojo por la jerarquía. El titular no se anima:
+     es candidato a ser el elemento LCP y retrasarlo empeora la métrica.
+     La regla global de prefers-reduced-motion la neutraliza sola. */
+  .Hero-eyebrow,
+  .Hero-texto p,
+  .Button-container {
+    animation: hero-entra 220ms var(--ease-out) backwards;
+  }
+  .Hero-eyebrow {
+    animation-delay: 0ms;
+  }
+  .Hero-texto p {
+    animation-delay: 50ms;
+  }
+  .Button-container {
+    animation-delay: 100ms;
+  }
+
+  @keyframes hero-entra {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+</style>
